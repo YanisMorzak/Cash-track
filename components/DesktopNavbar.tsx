@@ -1,7 +1,7 @@
 import React from 'react'
 import Logo from './Logo'
 import { items } from '@/enums/itemsNav'
-import { Label } from '@/components/ui/label';
+import NavbarItem from './NavbarItem';
 
 export default function DesktopNavbar() {
   return (
@@ -11,7 +11,7 @@ export default function DesktopNavbar() {
                 <Logo />
                 <div className="flex h-full">
                     {items.map((item) => {
-                        return <NavbarItem key={item.label} link={item.link} Label={item.label}/>
+                        return <NavbarItem key={item.label} link={item.link} label={item.label}/>
                     })}
                 </div>
             </div>
