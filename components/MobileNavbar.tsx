@@ -5,6 +5,8 @@ import { Menu } from 'lucide-react'
 import Logo from './Logo'
 import { items } from '@/enums/itemsNav'
 import NavbarItem from './NavbarItem'
+import { ThemeSwitcherBtn } from './ThemeSwitcherBtn'
+import { UserButton } from '@clerk/nextjs'
 
 export default function MobileNavbar() {
     const [isOpen, setIsOpen] = useState(false)
@@ -26,6 +28,13 @@ export default function MobileNavbar() {
                     </div>
                 </SheetContent>
             </Sheet>
+            <div className="flex h-[80px] min-h-[60px] items-center gap-x-4">
+                <Logo />
+            </div>
+            <div className="flex items-center gap-2">
+                <ThemeSwitcherBtn />
+                <UserButton afterSignOutUrl='/sign-in'/>
+            </div>
         </nav>
     </div>
   )
