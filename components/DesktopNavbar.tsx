@@ -2,6 +2,8 @@ import React from 'react'
 import Logo from './Logo'
 import { items } from '@/enums/itemsNav'
 import NavbarItem from './NavbarItem';
+import { UserButton } from '@clerk/nextjs';
+import { ThemeSwitcherBtn } from './ThemeSwitcherBtn';
 
 export default function DesktopNavbar() {
   return (
@@ -14,6 +16,10 @@ export default function DesktopNavbar() {
                         return <NavbarItem key={item.label} link={item.link} label={item.label}/>
                     })}
                 </div>
+            </div>
+            <div className="flex items-center gap-2">
+                <ThemeSwitcherBtn />
+                <UserButton afterSignOutUrl='/sign-in'/>
             </div>
         </nav>
     </div>
