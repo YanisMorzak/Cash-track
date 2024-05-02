@@ -29,7 +29,7 @@ export default function MobileNavbar() {
                 </SheetContent>
             </Sheet>
             <div className="flex h-[80px] min-h-[60px] items-center gap-x-4">
-                <Logo />
+                <Logo showIcon={false} />
             </div>
             <div className="flex items-center gap-2">
                 <ThemeSwitcherBtn />
