@@ -1,3 +1,4 @@
+import Logo from '@/components/Logo'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
@@ -42,6 +43,9 @@ export default async function page() {
       <Button className="w-full" asChild>
         <Link href={"/"}>I&apos;m done! Take me to the dashboard</Link>
       </Button>
+      <div className="mt-8">
+        <Logo />
+      </div>
     </div>
   )
 }
