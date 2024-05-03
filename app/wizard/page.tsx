@@ -1,6 +1,8 @@
+import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 import { currentUser } from '@clerk/nextjs/server'
+import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import React from 'react'
 
@@ -36,6 +38,10 @@ export default async function page() {
           {/* <CurrencyComboBox /> */}
         </CardContent>
         </Card>
+        <Separator />
+      <Button className="w-full" asChild>
+        <Link href={"/"}>I&apos;m done! Take me to the dashboard</Link>
+      </Button>
     </div>
   )
 }
