@@ -2,7 +2,7 @@ import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react'
-import { buttonVariants } from './ui/button';
+import { buttonVariants } from '../ui/button';
 
 export default function NavbarItem({link, label, onClick}: {
     link: string;
