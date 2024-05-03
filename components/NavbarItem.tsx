@@ -4,9 +4,10 @@ import { usePathname } from 'next/navigation';
 import React from 'react'
 import { buttonVariants } from './ui/button';
 
-export default function NavbarItem({link, label}: {
+export default function NavbarItem({link, label, onClick}: {
     link: string;
     label: string;
+    onClick?: () => void;
 }) {
     const pathname = usePathname()
     const isActive = pathname === link
@@ -15,7 +16,9 @@ export default function NavbarItem({link, label}: {
         <Link href={link} className={cn(buttonVariants({
             variant: "ghost"}),
             "w-full justify-start text-md text-muted-foreground hover:text-foreground",
-            isActive && "text-foreground")}>
+            isActive && "text-foreground")} onClick={() => {
+                if (onClick) onClick()
+            }}>
             {label}
         </Link>
         {isActive && (

@@ -23,7 +23,7 @@ export default function MobileNavbar() {
                     <Logo />
                     <div className="flex flex-col gap-1 pt-4">
                         {items.map((item) => {
-                            return <NavbarItem key={item.label} link={item.link} label={item.label}/>
+                            return <NavbarItem key={item.label} link={item.link} label={item.label} onClick={() => setIsOpen((prev) => !prev)}/>
                         })}
                     </div>
                 </SheetContent>
