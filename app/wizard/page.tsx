@@ -1,3 +1,4 @@
+import { CurrencyComboBox } from '@/components/CurrencyComboBox'
 import Logo from '@/components/Logo'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -36,7 +37,7 @@ export default async function page() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          {/* <CurrencyComboBox /> */}
+          <CurrencyComboBox />
         </CardContent>
         </Card>
         <Separator />
