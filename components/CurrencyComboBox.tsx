@@ -41,6 +41,15 @@ export function CurrencyComboBox() {
     queryFn: () => fetch("/api/user-settings").then((res) => res.json()),
   });
 
+  React.useEffect(() => {
+    if (!userSettings.data) return;
+    const userCurrency = Currencies.find(
+      (currency) => currency.value === userSettings.data.currency
+    );
+    if (userCurrency) setSelectedOption(userCurrency);
+  }, [userSettings.data]);
+  
+
   if (isDesktop) {
     return (
         <SkeletonWrapper isLoading={userSettings.isFetching}>
