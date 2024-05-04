@@ -51,8 +51,25 @@ export function CurrencyComboBox() {
     if (userCurrency) setSelectedOption(userCurrency);
   }, [userSettings.data]);
 
+  //management of mutation-related events, providing a better user experience by displaying appropriate messages in the event of mutation success or failure.
   const mutation = useMutation({
     mutationFn: UpdateUserCurrency,
+    onSuccess: (data: UserSettings) => {
+        toast.success(`Currency updated successuflly 🎉`, {
+          id: "update-currency",
+          //use of a unique identifier which ensures that you can specifically target this toast message and manipulate it as you wish.
+        });
+  
+        setSelectedOption(
+          Currencies.find((c) => c.value === data.currency) || null
+        );
+      },
+      onError: (e) => {
+        console.error(e);
+        toast.error("Something went wrong", {
+          id: "update-currency",
+        });
+      },
   });
   
   const selectOption = React.useCallback(
