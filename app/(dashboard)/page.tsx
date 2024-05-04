@@ -3,6 +3,7 @@ import { currentUser } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 import React from 'react'
 import { Button } from "@/components/ui/button";
+import { TrendingDown, TrendingUp } from 'lucide-react';
 
 export default async function page() {
   //retrieves the currently logged-in user using the "currentUser()" function
@@ -35,14 +36,14 @@ export default async function page() {
                   variant={"outline"}
                   className="border-emerald-500 bg-emerald-950 text-white hover:bg-emerald-700 hover:text-white"
                 >
-                  New income 🤑
+                  New income <TrendingUp className=' ml-3' />
                 </Button>
                       
                 <Button
                   variant={"outline"}
                   className="border-rose-500 bg-rose-950 text-white hover:bg-rose-700 hover:text-white"
                 >
-                  New expense 😤
+                  New expense <TrendingDown className='ml-3' />
                 </Button>   
           </div>
         </div>
