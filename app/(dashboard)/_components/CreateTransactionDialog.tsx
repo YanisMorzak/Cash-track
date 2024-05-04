@@ -3,7 +3,10 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { TransactionType } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { CreateTransactionSchema, CreateTransactionSchemaType } from "@/schema/transaction";
 import { ReactNode } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 interface Props {
     trigger: ReactNode;
@@ -11,7 +14,13 @@ interface Props {
   }
 
   function CreateTransactionDialog({ trigger, type }: Props) {
-  
+    const form = useForm<CreateTransactionSchemaType>({
+        resolver: zodResolver(CreateTransactionSchema),
+        defaultValues: {
+          type,
+          date: new Date(),
+        },
+      });
     return (
       <Dialog>
         <DialogTrigger asChild>{trigger}</DialogTrigger>
