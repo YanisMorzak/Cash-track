@@ -25,6 +25,7 @@ import {
 import { Currencies, Currency } from "@/lib/currencies"
 import { useQuery } from "@tanstack/react-query"
 import SkeletonWrapper from "./SkeletonWrapper"
+import { UserSettings } from "@prisma/client"
 
 
 
@@ -35,7 +36,7 @@ export function CurrencyComboBox() {
     null
   )
 
-  const userSettings = useQuery({
+  const userSettings = useQuery<UserSettings>({
     queryKey: ["userSettings"],
     queryFn: () => fetch("/api/user-settings").then((res) => res.json()),
   });
@@ -58,6 +59,7 @@ export function CurrencyComboBox() {
   }
 
   return (
+    <SkeletonWrapper isLoading={userSettings.isFetching}>
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
         <Button variant="outline" className="w-[150px] justify-start">
@@ -70,6 +72,7 @@ export function CurrencyComboBox() {
         </div>
       </DrawerContent>
     </Drawer>
+    </SkeletonWrapper>
   )
 }
 
