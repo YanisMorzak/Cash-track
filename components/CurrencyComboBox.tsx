@@ -23,7 +23,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { Currencies, Currency } from "@/lib/currencies"
-import { Mutation, useMutation, useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 import SkeletonWrapper from "./SkeletonWrapper"
 import { UserSettings } from "@prisma/client"
 import { toast } from "sonner"
