@@ -12,6 +12,13 @@ export default async function page() {
     redirect("/sign-in");
   }
 
+   // uses Prisma to search the database for user parameters.
+   const userSettings = await prisma.userSettings.findUnique({
+    where: {
+      userId: user.id,
+    },
+  });
+
   return (
     <div>page</div>
   )
