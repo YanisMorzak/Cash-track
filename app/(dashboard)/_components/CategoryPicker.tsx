@@ -1,6 +1,7 @@
 "use client"
 
 import { TransactionType } from "@/lib/types";
+import { Category } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 
@@ -18,6 +19,10 @@ interface Props {
       queryFn: () =>
         fetch(`/api/categories?type=${type}`).then((res) => res.json()),
     });
+
+    const selectedCategory = categoriesQuery.data?.find(
+        (category: Category) => category.name === value
+      );
   
     return (
         <div>categorypicker</div>
