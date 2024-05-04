@@ -19,6 +19,11 @@ export default async function page() {
     },
   });
 
+  // If no user parameters are found, this means that the user has not yet configured his parameters, so redirect the user to an initial configuration page.
+  if (!userSettings) {
+    redirect("/wizard");
+  }
+  
   return (
     <div>page</div>
   )
