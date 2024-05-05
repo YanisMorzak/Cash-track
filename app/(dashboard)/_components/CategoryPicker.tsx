@@ -6,7 +6,7 @@ import { TransactionType } from "@/lib/types";
 import { Category } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import { Check, ChevronsUpDown } from "lucide-react";
-import React from "react";
+import React, { useCallback } from "react";
 import { CategoryRow } from "./CategoryRow";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import CreateCategoryDialog from "./CreateCategoryDialog";
@@ -28,6 +28,15 @@ interface Props {
 
     const selectedCategory = categoriesQuery.data?.find(
         (category: Category) => category.name === value
+      );
+
+      // utilisée pour mettre à jour l'état du composant CategoryPicker après la création réussie d'une nouvelle catégorie.
+      const successCallback = useCallback(
+        (category: Category) => {
+          setValue(category.name);
+          setOpen((prev) => !prev);
+        },
+        [setValue, setOpen]
       );
   
     return (
@@ -54,7 +63,7 @@ interface Props {
           }}
         >
           <CommandInput placeholder="Search category..." />
-          <CreateCategoryDialog type={type} />
+          <CreateCategoryDialog type={type} successCallback={successCallback} />
           <CommandEmpty>
             <p>Category not found</p>
             <p className="text-xs text-muted-foreground">
