@@ -59,6 +59,16 @@ export default function CreateCategoryDialog({ type, trigger }: Props) {
           });
         },
       });
+
+      const onSubmit = useCallback(
+        (values: CreateCategorySchemaType) => {
+          toast.loading("Creating category...", {
+            id: "create-category",
+          });
+          mutate(values);
+        },
+        [mutate]
+      );
   return (
     <Dialog open={open} onOpenChange={setOpen}>
     <DialogTrigger asChild>
