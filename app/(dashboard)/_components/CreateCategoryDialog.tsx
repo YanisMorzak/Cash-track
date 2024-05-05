@@ -10,10 +10,14 @@ import { cn } from '@/lib/utils';
 import { CreateCategorySchema, CreateCategorySchemaType } from '@/schema/categories';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CircleOff, PlusSquare } from 'lucide-react';
-import React, { ReactNode, useState } from 'react'
+import React, { ReactNode, useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import Picker from "@emoji-mart/react";
 import data from "@emoji-mart/data";
+import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
+import { Category } from '@prisma/client';
+import { CreateCategory } from '../_actions/categories';
+import { toast } from 'sonner';
 
 interface Props {
     type: TransactionType;
@@ -26,6 +30,33 @@ export default function CreateCategoryDialog({ type, trigger }: Props) {
         resolver: zodResolver(CreateCategorySchema),
         defaultValues: {
           type,
+        },
+      });
+
+      const queryClient = useQueryClient();
+      const { mutate, isPending } = useMutation({
+        mutationFn: CreateCategory,
+        onSuccess: async (data: Category) => {
+          form.reset({
+            name: "",
+            icon: "",
+            type,
+          });
+    
+          toast.success(`Category ${data.name} created successfully 🎉`, {
+            id: "create-category",
+          });
+     
+          await queryClient.invalidateQueries({
+            queryKey: ["categories"],
+          });
+    
+          setOpen((prev) => !prev);
+        },
+        onError: () => {
+          toast.error("Something went wrong", {
+            id: "create-category",
+          });
         },
       });
   return (
