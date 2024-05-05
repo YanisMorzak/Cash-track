@@ -5,11 +5,12 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { TransactionType } from "@/lib/types";
 import { Category } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
-import { ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown } from "lucide-react";
 import React from "react";
 import { CategoryRow } from "./CategoryRow";
-import { Command, CommandInput } from "@/components/ui/command";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import CreateCategoryDialog from "./CreateCategoryDialog";
+import { cn } from "@/lib/utils";
 
 interface Props {
     type: TransactionType;
@@ -54,7 +55,34 @@ interface Props {
         >
           <CommandInput placeholder="Search category..." />
           <CreateCategoryDialog type={type} />
-         
+          <CommandEmpty>
+            <p>Category not found</p>
+            <p className="text-xs text-muted-foreground">
+              Tip: Create a new category
+            </p>
+          </CommandEmpty>
+          <CommandGroup>
+            <CommandList>
+              {categoriesQuery.data &&
+                categoriesQuery.data.map((category: Category) => (
+                  <CommandItem
+                    key={category.name}
+                    onSelect={() => {
+                      setValue(category.name);
+                      setOpen((prev) => !prev);
+                    }}
+                  >
+                    <CategoryRow category={category} />
+                    <Check
+                      className={cn(
+                        "mr-2 w-4 h-4 opacity-0",
+                        value === category.name && "opacity-100"
+                      )}
+                    />
+                  </CommandItem>
+                ))}
+            </CommandList>
+          </CommandGroup>
         </Command>
       </PopoverContent>
       </Popover>
