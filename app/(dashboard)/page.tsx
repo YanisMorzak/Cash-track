@@ -5,6 +5,7 @@ import React from 'react'
 import { Button } from "@/components/ui/button";
 import { TrendingDown, TrendingUp } from 'lucide-react';
 import CreateTransactionDialog from './_components/CreateTransactionDialog';
+import Overview from './_components/Overview';
 
 export default async function page() {
   //retrieves the currently logged-in user using the "currentUser()" function
@@ -58,6 +59,7 @@ export default async function page() {
           </div>
         </div>
       </div>
+      <Overview userSettings={userSettings} />
     </div>
   )
 }
