@@ -1,10 +1,12 @@
 "use client"
 
 import { GetCategoriesStatsResponseType } from '@/app/api/stats/categories/route';
+import SkeletonWrapper from '@/components/SkeletonWrapper';
 import { DateToUTCDate, GetFormatterForCurrency } from '@/lib/helpers';
 import { UserSettings } from '@prisma/client';
 import { useQuery } from '@tanstack/react-query';
 import React, { useMemo } from 'react'
+import CategoriesCard from './CategoriesCard';
 
 interface Props {
     userSettings: UserSettings;
@@ -30,6 +32,21 @@ export default function CategoriesStats({ userSettings, from, to }: Props) {
       }, [userSettings.currency]);
     
   return (
-    <div>CategoriesStats</div>
+    <div className="flex w-full flex-wrap gap-2 md:flex-nowrap">
+    <SkeletonWrapper isLoading={statsQuery.isFetching}>
+      <CategoriesCard
+        formatter={formatter}
+        type="income"
+        data={statsQuery.data || []}
+      />
+    </SkeletonWrapper>
+    <SkeletonWrapper isLoading={statsQuery.isFetching}>
+      <CategoriesCard
+        formatter={formatter}
+        type="expense"
+        data={statsQuery.data || []}
+      />
+    </SkeletonWrapper>
+  </div>
   )
 }
