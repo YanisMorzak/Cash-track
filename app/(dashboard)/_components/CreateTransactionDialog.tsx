@@ -1,10 +1,10 @@
 "use client";
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { TransactionType } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { CreateTransactionSchema, CreateTransactionSchemaType } from "@/schema/transaction";
-import { ReactNode, useCallback } from "react";
+import { ReactNode, useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -13,8 +13,12 @@ import CategoryPicker from "./CategoryPicker";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, Loader2 } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { CreateTransaction } from "../_actions/transactions";
+import { toast } from "sonner";
+import { DateToUTCDate } from "@/lib/helpers";
 
 interface Props {
     trigger: ReactNode;
@@ -29,6 +33,7 @@ interface Props {
           date: new Date(),
         },
       });
+      const [open, setOpen] = useState(false);
 
       // handleCategoryChange est une fonction utilisée pour mettre à jour la valeur de la catégorie sélectionnée dans le formulaire lorsque celle-ci change dans le composant CategoryPicker
       const handleCategoryChange = useCallback(
@@ -37,8 +42,47 @@ interface Props {
         },
         [form]
       );
+
+      
+  const queryClient = useQueryClient();
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: CreateTransaction,
+    onSuccess: () => {
+      toast.success("Transaction created successfully 🎉", {
+        id: "create-transaction",
+      });
+
+      form.reset({
+        type,
+        description: "",
+        amount: 0,
+        date: new Date(),
+        category: undefined,
+      });
+
+      // After creating a transaction, we need to invalidate the overview query which will refetch data in the homepage
+      queryClient.invalidateQueries({
+        queryKey: ["overview"],
+      });
+
+      setOpen((prev) => !prev);
+    },
+  });
+
+  const onSubmit = useCallback(
+    (values: CreateTransactionSchemaType) => {
+      toast.loading("Creating transaction...", { id: "create-transaction" });
+
+      mutate({
+        ...values,
+        date: DateToUTCDate(values.date),
+      });
+    },
+    [mutate]
+  );
     return (
-      <Dialog>
+      <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{trigger}</DialogTrigger>
         <DialogContent>
         <DialogHeader>
@@ -56,7 +100,7 @@ interface Props {
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
             <FormField
               control={form.control}
               name="description"
@@ -152,6 +196,23 @@ interface Props {
             </div>
            </form>
         </Form>
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button
+              type="button"
+              variant={"secondary"}
+              onClick={() => {
+                form.reset();
+              }}
+            >
+              Cancel
+            </Button>
+          </DialogClose>
+          <Button onClick={form.handleSubmit(onSubmit)} disabled={isPending}>
+            {!isPending && "Create"}
+            {isPending && <Loader2 className="animate-spin" />}
+          </Button>
+        </DialogFooter>
         </DialogContent>
       </Dialog>
     );
