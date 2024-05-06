@@ -1,10 +1,10 @@
 "use client"
 
 import { GetCategoriesStatsResponseType } from '@/app/api/stats/categories/route';
-import { DateToUTCDate } from '@/lib/helpers';
+import { DateToUTCDate, GetFormatterForCurrency } from '@/lib/helpers';
 import { UserSettings } from '@prisma/client';
 import { useQuery } from '@tanstack/react-query';
-import React from 'react'
+import React, { useMemo } from 'react'
 
 interface Props {
     userSettings: UserSettings;
@@ -24,6 +24,10 @@ export default function CategoriesStats({ userSettings, from, to }: Props) {
             )}`
           ).then((res) => res.json()),
       });
+
+      const formatter = useMemo(() => {
+        return GetFormatterForCurrency(userSettings.currency);
+      }, [userSettings.currency]);
     
   return (
     <div>CategoriesStats</div>
