@@ -24,7 +24,7 @@ interface TransactionFormProps {
 export default function TransactionForm({type, onSubmit, form, handleCategoryChange}: TransactionFormProps) {
   return (
     <Form {...form}>
-          <form className="space-y-4" onSubmit={() => onSubmit}>
+          <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
             <FormField
               control={form.control}
               name="description"

@@ -94,7 +94,7 @@ interface Props {
             transaction
           </DialogTitle>
         </DialogHeader>
-        <TransactionForm type={type} onSubmit={() => form.handleSubmit(onSubmit)} form={form} handleCategoryChange={handleCategoryChange}/>
+        <TransactionForm type={type} onSubmit={onSubmit} form={form} handleCategoryChange={handleCategoryChange}/>
         <DialogFooter>
           <DialogClose asChild>
             <Button
