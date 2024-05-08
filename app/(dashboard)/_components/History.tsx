@@ -18,6 +18,7 @@ import {
     XAxis,
     YAxis,
   } from "recharts";
+import CustomTooltip from './CustomTooltip';
 
 export default function History({ userSettings }: { userSettings: UserSettings }) {
     const [timeframe, setTimeframe] = useState<Timeframe>("month");
@@ -153,12 +154,12 @@ export default function History({ userSettings }: { userSettings: UserSettings }
                     radius={4}
                     className="cursor-pointer"
                   />
-                  {/* <Tooltip
+                  <Tooltip
                     cursor={{ opacity: 0.1 }}
                     content={(props) => (
                       <CustomTooltip formatter={formatter} {...props} />
                     )}
-                  /> */}
+                  />
                 </BarChart> 
               </ResponsiveContainer>
             )}
