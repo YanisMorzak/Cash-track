@@ -1,4 +1,6 @@
 "use client"
+import { CurrencyComboBox } from '@/components/CurrencyComboBox'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import React from 'react'
 
 export default function page() {
@@ -15,6 +17,20 @@ export default function page() {
         </div>
       </div>
     </div>
+     {/* END HEDER */}
+     <div className="container flex flex-col gap-4 p-4">
+        <Card>
+          <CardHeader>
+            <CardTitle>Currency</CardTitle>
+            <CardDescription>
+              Set your default currency for transactions
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <CurrencyComboBox />
+          </CardContent>
+        </Card>
+      </div>
     </>
   )
 }
