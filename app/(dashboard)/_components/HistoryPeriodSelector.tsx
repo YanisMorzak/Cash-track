@@ -7,6 +7,7 @@ import { Period, Timeframe } from '@/lib/types';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react'
 import YearSelector from './YearSelector';
+import MonthSelector from './MonthSelector';
 
 interface Props {
     period: Period;
@@ -50,6 +51,14 @@ export default function HistoryPeriodSelector({
             years={historyPeriods.data || []}
           />
         </SkeletonWrapper>
+        {timeframe === "month" && (
+          <SkeletonWrapper
+            isLoading={historyPeriods.isFetching}
+            fullWidth={false}
+          >
+            <MonthSelector period={period} setPeriod={setPeriod} />
+          </SkeletonWrapper>
+        )}
         
       </div> 
     </div>
