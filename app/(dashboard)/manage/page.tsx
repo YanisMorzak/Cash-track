@@ -2,6 +2,7 @@
 import { CurrencyComboBox } from '@/components/CurrencyComboBox'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import React from 'react'
+import CategoryList from './_components/CategoryList'
 
 export default function page() {
   return (
@@ -30,6 +31,8 @@ export default function page() {
             <CurrencyComboBox />
           </CardContent>
         </Card>
+        <CategoryList type="income" />
+        <CategoryList type="expense" />
       </div>
     </>
   )
