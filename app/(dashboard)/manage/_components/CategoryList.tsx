@@ -24,7 +24,7 @@ export default function CategoryList({ type }: { type: TransactionType }) {
     
   return (
     <SkeletonWrapper isLoading={categoriesQuery.isLoading}>
-    <Card>
+    <Card className='mb-5'>
       <CardHeader>
         <CardTitle className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2">
