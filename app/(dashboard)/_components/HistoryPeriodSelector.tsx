@@ -6,6 +6,7 @@ import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Period, Timeframe } from '@/lib/types';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react'
+import YearSelector from './YearSelector';
 
 interface Props {
     period: Period;
@@ -38,6 +39,21 @@ export default function HistoryPeriodSelector({
         </TabsList>
       </Tabs>
     </SkeletonWrapper>
+    <div className="flex flex-wrap items-center gap-2">
+        <SkeletonWrapper
+          isLoading={historyPeriods.isFetching}
+          fullWidth={false}
+        >
+          <YearSelector
+            period={period}
+            setPeriod={setPeriod}
+            years={historyPeriods.data || []}
+          />
+        </SkeletonWrapper>
+        
+      </div> 
     </div>
   )
 }
+
+
