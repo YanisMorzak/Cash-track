@@ -5,6 +5,7 @@ import { MAX_DATE_RANGE_DAYS } from '@/lib/constants';
 import { differenceInDays, startOfMonth } from 'date-fns';
 import React, { useState } from 'react'
 import { toast } from 'sonner';
+import TransactionTable from './_components/TransactionTable';
 
 export default function page() {
     const [dateRange, setDateRange] = useState<{ from: Date; to: Date }>({
@@ -38,6 +39,9 @@ export default function page() {
             }}
           />
       </div>
+    </div>
+    <div className="container">
+        <TransactionTable />
     </div>
     </>
   )
