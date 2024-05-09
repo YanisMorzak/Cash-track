@@ -54,6 +54,20 @@ const columns: ColumnDef<TransactionHistoryRow>[] = [
           <div className="capitalize">{row.original.description}</div>
         ),
       },
+      {
+        accessorKey: "date",
+        header: "Date",
+        cell: ({ row }) => {
+          const date = new Date(row.original.date);
+          const formattedDate = date.toLocaleDateString("default", {
+            timeZone: "UTC",
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+          });
+          return <div className="text-muted-foreground">{formattedDate}</div>;
+        },
+      },
 ]
 
 export default function TransactionTable({ from, to }: Props) {
