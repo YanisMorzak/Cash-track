@@ -176,7 +176,9 @@ export default function TransactionTable({ from, to }: Props) {
               ]}
             />
           )}
-          
+           <div className="flex flex-wrap gap-2">
+          <DataTableViewOptions table={table} />
+        </div>
         </div>
         </div>
         <SkeletonWrapper isLoading={history.isFetching}>
