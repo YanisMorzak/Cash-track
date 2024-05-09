@@ -90,6 +90,17 @@ const columns: ColumnDef<TransactionHistoryRow>[] = [
           </div>
         ),
       },
+      {
+        accessorKey: "amount",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Amount" />
+        ),
+        cell: ({ row }) => (
+          <p className="text-md rounded-lg bg-gray-400/5 p-2 text-center font-medium">
+            {row.original.formattedAmount}
+          </p>
+        ),
+      },
 ]
 
 export default function TransactionTable({ from, to }: Props) {
