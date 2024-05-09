@@ -166,6 +166,16 @@ export default function TransactionTable({ from, to }: Props) {
               options={categoriesOptions}
             />
           )}
+          {table.getColumn("type") && (
+            <DataTableFacetedFilter
+              title="Type"
+              column={table.getColumn("type")}
+              options={[
+                { label: "Income", value: "income" },
+                { label: "Expense", value: "expense" },
+              ]}
+            />
+          )}
           
         </div>
         </div>
