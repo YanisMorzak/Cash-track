@@ -30,6 +30,7 @@ import { DataTableFacetedFilter } from '@/components/datatable/FacetedFilters';
 import { DownloadIcon } from 'lucide-react';
 import { DataTableViewOptions } from '@/components/datatable/ColumnToggle';
 import { Button } from '@/components/ui/button';
+import { download, generateCsv, mkConfig } from "export-to-csv";
 
 interface Props {
     from: Date;
@@ -113,6 +114,13 @@ const columns: ColumnDef<TransactionHistoryRow>[] = [
       },
 ]
 
+const csvConfig = mkConfig({
+    fieldSeparator: ",",
+    decimalSeparator: ".",
+    useKeysAsHeaders: true,
+  });
+  
+
 export default function TransactionTable({ from, to }: Props) {
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -126,6 +134,11 @@ export default function TransactionTable({ from, to }: Props) {
             )}&to=${DateToUTCDate(to)}`
           ).then((res) => res.json()),
       });
+
+      const handleExportCSV = (data: any[]) => {
+        const csv = generateCsv(csvConfig)(data);
+        download(csvConfig)(csv);
+      };
 
       const table = useReactTable({
         data: history.data || emptyData,
@@ -178,9 +191,29 @@ export default function TransactionTable({ from, to }: Props) {
               ]}
             />
           )}
+          </div>
            <div className="flex flex-wrap gap-2">
+           <Button
+            variant={"outline"}
+            size={"sm"}
+            className="ml-auto h-8 lg:flex"
+            onClick={() => {
+              const data = table.getFilteredRowModel().rows.map((row) => ({
+                category: row.original.category,
+                categoryIcon: row.original.categoryIcon,
+                description: row.original.description,
+                type: row.original.type,
+                amount: row.original.amount,
+                formattedAmount: row.original.formattedAmount,
+                date: row.original.date,
+              }));
+              handleExportCSV(data);
+            }}
+          >
+            <DownloadIcon className="mr-2 h-4 w-4" />
+            Export CSV
+          </Button>
           <DataTableViewOptions table={table} />
-        </div>
         </div>
         </div>
         <SkeletonWrapper isLoading={history.isFetching}>
