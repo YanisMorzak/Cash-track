@@ -41,7 +41,7 @@ export default function page() {
       </div>
     </div>
     <div className="container">
-        <TransactionTable />
+        <TransactionTable from={dateRange.from} to={dateRange.to}/>
     </div>
     </>
   )
