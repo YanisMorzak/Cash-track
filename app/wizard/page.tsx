@@ -42,7 +42,7 @@ export default async function page() {
         </Card>
         <Separator />
       <Button className="w-full" asChild>
-        <Link href={"/"}>I&apos;m done! Take me to the dashboard</Link>
+        <Link href={"/"}>Im done! Take me to the dashboard</Link>
       </Button>
       <div className="mt-8">
         <Logo />

@@ -42,7 +42,7 @@ export default function CreateCategoryDialog({ type, trigger, successCallback }:
             type,
           });
     
-          toast.success(`Category ${data.name} created successfully 🎉`, {
+          toast.success(`Category ${data.name} created successfully !`, {
             id: "create-category",
           });
 
@@ -118,7 +118,7 @@ export default function CreateCategoryDialog({ type, trigger, successCallback }:
           </DialogClose>
           <Button onClick={form.handleSubmit(onSubmit)} disabled={isPending}>
             {!isPending && "Create"}
-            {isPending && <Loader2 className="animate-spin" />}'
+            {isPending && <Loader2 className="animate-spin" />}
           </Button>
         </DialogFooter>
         </DialogContent>
