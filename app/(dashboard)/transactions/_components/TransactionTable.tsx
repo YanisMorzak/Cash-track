@@ -19,10 +19,14 @@ import {
     TableHeader,
     TableRow,
   } from "@/components/ui/table"
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import SkeletonWrapper from '@/components/SkeletonWrapper';
 import { DataTableColumnHeader } from '@/components/datatable/ColumnHeader';
 import { cn } from '@/lib/utils';
+import { DataTableFacetedFilter } from '@/components/datatable/FacetedFilters';
+import { DownloadIcon } from 'lucide-react';
+import { DataTableViewOptions } from '@/components/datatable/ColumnToggle';
+import { Button } from '@/components/ui/button';
 
 interface Props {
     from: Date;
@@ -126,9 +130,36 @@ export default function TransactionTable({ from, to }: Props) {
         onSortingChange: setSorting,
         getSortedRowModel: getSortedRowModel(),
       });
+
+      const categoriesOptions = useMemo(() => {
+        //carte (Map) est créée pour stocker les catégories uniques de transactions avec leurs icônes associées. Chaque entrée de cette carte a pour clé le nom de la catégorie et pour valeur un objet contenant la valeur (value) de la catégorie et son libellé (label)
+        const categoriesMap = new Map();
+        //Pour chaque transaction dans les données historiques, la fonction parcourt chaque transaction et ajoute la catégorie à la carte si elle n'est pas déjà présente.
+        history.data?.forEach((transaction) => {
+          categoriesMap.set(transaction.category, {
+            value: transaction.category,
+            label: `${transaction.categoryIcon} ${transaction.category}`,
+          });
+        });
+        //Les catégories uniques sont stockées dans un ensemble (Set) pour éliminer les doublons
+        const uniqueCategories = new Set(categoriesMap.values());
+        // les catégories uniques sont converties en tableau pour être utilisées comme options de filtrage.
+        return Array.from(uniqueCategories);
+      }, [history.data]);
   return (
     <div className='w-full'>
-        <div className="flex flex-wrap items-end justify-between gap-2 py-4"></div>
+        <div className="flex flex-wrap items-end justify-between gap-2 py-4">
+        <div className="flex gap-2">
+          {table.getColumn("category") && (
+            <DataTableFacetedFilter
+              title="Category"
+              column={table.getColumn("category")}
+              options={categoriesOptions}
+            />
+          )}
+          
+        </div>
+        </div>
         <SkeletonWrapper isLoading={history.isFetching}>
         <div className="rounded-md border">
         <Table>
