@@ -45,6 +45,15 @@ const columns: ColumnDef<TransactionHistoryRow>[] = [
           </div>
         ),
       },
+      {
+        accessorKey: "description",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Description" />
+        ),
+        cell: ({ row }) => (
+          <div className="capitalize">{row.original.description}</div>
+        ),
+      },
 ]
 
 export default function TransactionTable({ from, to }: Props) {
